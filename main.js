@@ -1,7 +1,12 @@
 var canvas;
  var canvasContext;
  var ballX = 50;
-var ballSpeedX =5;
+    var ballY = 50; 
+var ballSpeedX = 5;
+var ballSpeedY = 4;
+
+var paddle1Y = 250;
+const PADDLE_HEIGHT = 100;
  window.onload = function(){
      
      canvas = document.getElementById("game");
@@ -11,16 +16,23 @@ var ballSpeedX =5;
          draw();
          move();
      },1000/framesPerSecond);
- }
+ } 
  
  function move(){
      
      ballX=ballX + ballSpeedX;
-     if(ballX<0){
+     if(ballX < 0){
          ballSpeedX = -ballSpeedX;
      }
-     if(ballX>canvas.width){
+     if(ballX > canvas.width){
          ballSpeedX = -ballSpeedX;
+     }
+     ballY=ballY + ballSpeedY;
+     if(ballY < 0){
+         ballSpeedY = -ballSpeedY;
+     }
+     if(ballY > canvas.height){
+         ballSpeedY = -ballSpeedY;
      }
  }
     
@@ -30,7 +42,7 @@ function draw(){
     //this will be paddle 
     drawRect(0,210,10,100,'white');
     //this will be  ball
-    drawBall(ballX,50,10,'white');
+    drawBall(ballX,ballY,10,'white');
 }
 
 //function to drawball
