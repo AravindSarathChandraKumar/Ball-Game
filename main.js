@@ -1,10 +1,11 @@
 var canvas;
  var canvasContext;
  var ballX = 50;
-    var ballY = 50; 
+var ballY = 50; 
 var ballSpeedX = 5;
 var ballSpeedY = 4;
-
+var player1Score = 0;
+var player2Score = 0;
 var paddle1Y = 250;
 var paddle2Y = 250;
 const PADDLE_HEIGHT = 100;
@@ -49,8 +50,20 @@ function calculateMousePos(evt){
      ballY = canvas.height/2;
  }
  
+function computerMovement(){
+     var paddle2YCenter = paddle2Y + (PADDLE_HEIGHT/2);
+    if(paddle2YCenter < ballY - 35){
+        
+        paddle2Y = paddle2Y + 6;
+    }else if(paddle2YCenter > ballY + 30){
+        
+        paddle2Y = paddle2Y - 6;
+    }
+}
+
  function move(){
      
+     computerMovement();
      ballX=ballX + ballSpeedX;
      if(ballX < 0){
          
@@ -60,6 +73,7 @@ function calculateMousePos(evt){
          }else{
         
         ballReset();
+        player2Score++;
      }
      }
      if(ballX > canvas.width){
@@ -69,6 +83,7 @@ function calculateMousePos(evt){
          }else{
         
           ballReset();
+            player1Score++;
      }
      }
      ballY=ballY + ballSpeedY;
@@ -87,11 +102,14 @@ function draw(){
     drawRect(0,paddle1Y,PADDLE_THICKNESS,PADDLE_HEIGHT,'white');
     
     //this will be compputer paddle 
-    drawRect(canvas.width-PADDLE_THICKNESS,paddle2Y,PADDLE_THICKNESS,PADDLE_HEIGHT,'white');
+    drawRect((canvas.width-PADDLE_THICKNESS),paddle2Y,PADDLE_THICKNESS,PADDLE_HEIGHT,'white');
     
     
     //this will be  ball
     drawBall(ballX,ballY,10,'white');
+    
+    canvasContext.fillText(player1Score,100,100);
+    canvasContext.fillText(player2Score,canvas.width-100,100);
 }
 
 //function to drawball
